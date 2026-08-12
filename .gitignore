@@ -1,0 +1,13 @@
+scripts/
+artifacts/
+.tools/
+.vs/
+.idea/
+.vscode/
+**/bin/
+**/obj/
+TestResults/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates

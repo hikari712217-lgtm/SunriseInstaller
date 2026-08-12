@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>SunriseInstaller</AssemblyName>
+    <RootNamespace>Sunrise.Installer</RootNamespace>
+    <Copyright>Copyright (C) 2026 stanuwu</Copyright>
+    <PackageLicenseExpression>GPL-2.0-only</PackageLicenseExpression>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <ApplicationIcon>SunriseInstaller.ico</ApplicationIcon>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+    <PublishReadyToRun>true</PublishReadyToRun>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE" Link="LICENSE" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="..\..\DEPOTDOWNLOADER_LICENSE.txt" Link="DEPOTDOWNLOADER_LICENSE.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+  <Target Name="RejectBundledDepotDownloader" BeforeTargets="PrepareForBuild">
+    <ItemGroup>
+      <_BundledDepotDownloader Include="$(MSBuildProjectDirectory)\**\DepotDownloader.exe;$(MSBuildProjectDirectory)\**\DepotDownloader.dll;$(MSBuildProjectDirectory)\**\DepotDownloader*.zip" Exclude="$(MSBuildProjectDirectory)\bin\**;$(MSBuildProjectDirectory)\obj\**" />
+    </ItemGroup>
+    <Error Condition="'@(_BundledDepotDownloader)' != ''" Text="DepotDownloader must be downloaded at runtime, not bundled." />
+    <Error Condition="$([System.String]::Copy('@(PackageReference)').Contains('DepotDownloader'))" Text="DepotDownloader must not be a package dependency." />
+    <Error Condition="$([System.String]::Copy('@(ProjectReference)').Contains('DepotDownloader'))" Text="DepotDownloader must not be a project dependency." />
+  </Target>
+</Project>
