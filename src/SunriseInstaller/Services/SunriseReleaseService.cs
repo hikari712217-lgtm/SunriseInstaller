@@ -34,17 +34,15 @@ public sealed class SunriseReleaseService(
 
         try
         {
-            string assetPath = Path.Combine(stagingDirectory, "release-download");
+            string dllPath = Path.Combine(stagingDirectory, "steam_api64.dll");
             if (localPayloadPath is null)
             {
-                await gitHub.DownloadAsync(release.Asset, assetPath, progress, cancellationToken);
+                await gitHub.DownloadAsync(release.Asset, dllPath, progress, cancellationToken);
             }
             else
             {
-                await CopyLocalAsync(localPayloadPath, release.Asset, assetPath, progress, cancellationToken);
+                await CopyLocalAsync(localPayloadPath, release.Asset, dllPath, progress, cancellationToken);
             }
-
-            string dllPath = Path.Combine(stagingDirectory, "steam_api64.dll");
 
             FileIntegrity.ValidateAmd64Dll(dllPath);
             string hash = await FileIntegrity.Sha256Async(dllPath, cancellationToken);
