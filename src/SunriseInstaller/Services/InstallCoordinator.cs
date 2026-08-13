@@ -22,7 +22,6 @@ public sealed class InstallCoordinator : IDisposable
     public async Task InstallAsync(
         string installRoot,
         string steamUsername,
-        bool useQrSignIn,
         IProgress<OperationProgress>? progress,
         CancellationToken cancellationToken)
     {
@@ -37,7 +36,6 @@ public sealed class InstallCoordinator : IDisposable
             await PrepareGameFilesAsync(
                 root,
                 steamUsername.Trim(),
-                useQrSignIn,
                 validate: false,
                 progress,
                 cancellationToken);
@@ -61,7 +59,6 @@ public sealed class InstallCoordinator : IDisposable
     public async Task RepairAsync(
         string installRoot,
         string steamUsername,
-        bool useQrSignIn,
         IProgress<OperationProgress>? progress,
         CancellationToken cancellationToken)
     {
@@ -80,7 +77,6 @@ public sealed class InstallCoordinator : IDisposable
             await PrepareGameFilesAsync(
                 root,
                 steamUsername.Trim(),
-                useQrSignIn,
                 validate: true,
                 progress,
                 cancellationToken);
@@ -189,7 +185,6 @@ public sealed class InstallCoordinator : IDisposable
     private async Task PrepareGameFilesAsync(
         string installRoot,
         string steamUsername,
-        bool useQrSignIn,
         bool validate,
         IProgress<OperationProgress>? progress,
         CancellationToken cancellationToken)
@@ -202,7 +197,6 @@ public sealed class InstallCoordinator : IDisposable
             downloader,
             installRoot,
             steamUsername,
-            useQrSignIn,
             validate,
             MessageProgress(progress),
             cancellationToken);

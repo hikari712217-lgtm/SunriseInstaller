@@ -34,7 +34,6 @@ public sealed class UserPreferences
 {
     public string InstallDirectory { get; set; } = string.Empty;
     public string SteamUsername { get; set; } = string.Empty;
-    public bool UseQrSignIn { get; set; } = true;
 }
 
 public enum UpdateStatus

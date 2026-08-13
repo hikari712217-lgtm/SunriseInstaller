@@ -9,7 +9,6 @@ public sealed partial class MainForm : Form
     private readonly InstallCoordinator coordinator;
     private readonly TextBox installPath = new();
     private readonly TextBox steamUsername = new();
-    private readonly CheckBox qrSignIn = new();
     private readonly Label status = new();
     private readonly ProgressBar progressBar = new();
     private readonly RichTextBox activity = new();
@@ -57,7 +56,6 @@ public sealed partial class MainForm : Form
             UserPreferences preferences = await InstallCoordinator.LoadPreferencesAsync(CancellationToken.None);
             installPath.Text = preferences.InstallDirectory;
             steamUsername.Text = preferences.SteamUsername;
-            qrSignIn.Checked = preferences.UseQrSignIn;
             await RefreshLocalStatusAsync();
         }
         catch (Exception exception)
@@ -93,7 +91,6 @@ public sealed partial class MainForm : Form
         {
             InstallDirectory = installPath.Text.Trim(),
             SteamUsername = steamUsername.Text.Trim(),
-            UseQrSignIn = qrSignIn.Checked,
         };
         return InstallCoordinator.SavePreferencesAsync(preferences, cancellationToken);
     }

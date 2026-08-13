@@ -68,7 +68,6 @@ public sealed class DepotDownloaderService(GitHubClient gitHub, InstallerLog log
         string executable,
         string installRoot,
         string steamUsername,
-        bool useQrSignIn,
         bool validate,
         IProgress<string>? status,
         CancellationToken cancellationToken)
@@ -83,14 +82,12 @@ public sealed class DepotDownloaderService(GitHubClient gitHub, InstallerLog log
         for (int index = 0; index < AppConstants.Depots.Length; index++)
         {
             DepotSpec depot = AppConstants.Depots[index];
-            bool showQr = useQrSignIn && index == 0;
             status?.Report($"{(validate ? "Validating" : "Downloading")} depot {depot.DepotId}...");
             int exitCode = await RunAsync(
                 executable,
                 installRoot,
                 steamUsername,
                 depot,
-                showQr,
                 validate,
                 cancellationToken);
             if (exitCode != 0)
@@ -110,7 +107,6 @@ public sealed class DepotDownloaderService(GitHubClient gitHub, InstallerLog log
         string installRoot,
         string steamUsername,
         DepotSpec depot,
-        bool useQrSignIn,
         bool validate,
         CancellationToken cancellationToken)
     {
@@ -129,11 +125,6 @@ public sealed class DepotDownloaderService(GitHubClient gitHub, InstallerLog log
         startInfo.ArgumentList.Add("-remember-password");
         AddArgument(startInfo, "-os", "windows");
         AddArgument(startInfo, "-osarch", "64");
-        if (useQrSignIn)
-        {
-            startInfo.ArgumentList.Add("-qr");
-        }
-
         if (validate)
         {
             startInfo.ArgumentList.Add("-validate");

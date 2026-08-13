@@ -109,19 +109,14 @@ public sealed partial class MainForm
         steamUsername.Margin = new Padding(0, 5, 0, 8);
         panel.Controls.Add(steamUsername, 0, 1);
 
-        qrSignIn.Text = "Use a QR sign-in instead of a password";
-        qrSignIn.Checked = true;
-        qrSignIn.AutoSize = true;
-        qrSignIn.Margin = new Padding(0, 2, 0, 4);
-        panel.Controls.Add(qrSignIn, 0, 2);
         Label help = new()
         {
-            Text = "A console opens for QR, password, and Steam Guard prompts.",
+            Text = "A console opens for password and Steam Guard prompts.",
             AutoSize = true,
             ForeColor = Color.FromArgb(100, 116, 139),
             Margin = new Padding(0),
         };
-        panel.Controls.Add(help, 0, 3);
+        panel.Controls.Add(help, 0, 2);
         return panel;
     }
 
