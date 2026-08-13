@@ -17,6 +17,8 @@ public static class ErrorMessages
             UnauthorizedAccessException =>
                 "Access was denied. Choose a writable folder or run with the needed access.",
             PathTooLongException => "The selected path is too long. Choose a shorter install folder.",
+            FileNotFoundException or DirectoryNotFoundException =>
+                "An expected file was missing. See the installer log for details.",
             IOException ioException when IsDiskFull(ioException) =>
                 "The drive ran out of space. Free some space and run Repair.",
             IOException ioException when IsSharingViolation(ioException) =>
